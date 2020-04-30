@@ -1,0 +1,18 @@
+.jumbotron {
+    margin-top: 1rem;
+}
+
+#searchBar {
+    font-size: 18px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    width: 80%;
+}
+
+#searchBtn {
+    margin-left: 5px;
+}
+
+.forecastDiv {
+    margin-top: 1rem;
+}
