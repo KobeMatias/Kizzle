@@ -23,13 +23,26 @@ $(document).ready(function() {
         
         var googleURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=" + APIKeyGoogle;
         var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + APIKeyWeather;
-        console.log(queryURL);
 
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function(response) {
             console.log(response);
+            var tempEl = $("#temp");
+            var humidityEl = $("#humidity");
+            var windSpeedEl = $("#windSpeed");
+            var uviEl = $("#uvIndex");
+
+            var tempData = (response.current.temp - 273.15) * 1.80 + 32;
+            var humidityData = response.current.humidity;
+            var windData = response.current.wind_speed;
+            var uviData = response.current.uvi;
+
+            tempEl.append("Temperature: " + tempData + " F");
+            humidityEl.append("Humidity: " + humidityData);
+            windSpeedEl.append("Wind Speed: " + windData);
+            uviEl.append("UV Index: " + uviData);
         });
 
         $.ajax({
