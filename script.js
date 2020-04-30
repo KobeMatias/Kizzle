@@ -35,11 +35,12 @@ $(document).ready(function() {
             var uviEl = $("#uvIndex");
 
             var tempData = (response.current.temp - 273.15) * 1.80 + 32;
+            var tempDataRounded = tempData.toFixed(2);
             var humidityData = response.current.humidity;
             var windData = response.current.wind_speed;
             var uviData = response.current.uvi;
 
-            tempEl.append("Temperature: " + tempData + " F");
+            tempEl.append("Temperature: " + tempDataRounded + " F");
             humidityEl.append("Humidity: " + humidityData);
             windSpeedEl.append("Wind Speed: " + windData);
             uviEl.append("UV Index: " + uviData);
@@ -55,10 +56,11 @@ $(document).ready(function() {
                 forecastHeader.append(forecastDateP);
 
                 var forecastTempData = (response.daily[i].temp.day - 273.15) * 1.80 + 32;
+                var forecastTempDataRounded = forecastTempData.toFixed(2);
                 var forecastHumidityData = response.daily[i].humidity;
                 var forecastData = $("<div class='card-body'>");
 
-                var forecastTempEl = $("<p>").text("Temp: " + forecastTempData + " F");
+                var forecastTempEl = $("<p>").text("Temp: " + forecastTempDataRounded + " F");
                 var forecastHumidityEl = $("<p>").text("Humidity: " + forecastHumidityData + "%");
                 forecastCol.append(forecastData);
                 forecastData.append(forecastTempEl, forecastHumidityEl);
