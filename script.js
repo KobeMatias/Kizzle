@@ -43,6 +43,26 @@ $(document).ready(function() {
             humidityEl.append("Humidity: " + humidityData);
             windSpeedEl.append("Wind Speed: " + windData);
             uviEl.append("UV Index: " + uviData);
+
+            for (i = 1; i < 6; i++) {
+                var forecastDate = moment().add(i, 'days').format('L');  
+                var forecastCol = $("<div class='col'>");
+                var forecastHeader = $("<div class='card-header'>");
+                var forecastDateP = $("<p>").text(forecastDate);
+
+                $("#forecastBody").append(forecastCol);
+                forecastCol.append(forecastHeader);
+                forecastHeader.append(forecastDateP);
+
+                var forecastTempData = (response.daily[i].temp.day - 273.15) * 1.80 + 32;
+                var forecastHumidityData = response.daily[i].humidity;
+                var forecastData = $("<div class='card-body'>");
+
+                var forecastTempEl = $("<p>").text("Temp: " + forecastTempData + " F");
+                var forecastHumidityEl = $("<p>").text("Humidity: " + forecastHumidityData + "%");
+                forecastCol.append(forecastData);
+                forecastData.append(forecastTempEl, forecastHumidityEl);
+            }
         });
 
         $.ajax({
