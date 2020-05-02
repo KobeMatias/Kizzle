@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var searchBar = $("#searchBar");
 
     function updateTime() {
         var date = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -72,12 +71,56 @@ $(document).ready(function() {
             method: "GET"
         }).then(function(response) {
             console.log(response);
+            var forecastDate = moment().format('L');
             var cityDiv = $("#cityName");
             var cityData = response.results[6].formatted_address;
             var cityDisplay = $("<p>").text(cityData);
-            cityDiv.append(cityDisplay);
+            var dateDisplay = $("<p>").text(forecastDate);
+            cityDiv.append(cityDisplay, dateDisplay);
         });
     }
-    getLocation();
 
+    var cityHistory = [];
+
+    function StorageCheck() {
+        // Get stored cities from localStorage
+        // Parsing the JSON string to an object
+        var storedCities = JSON.parse(localStorage.getItem("searchHistory"));
+      
+        // If cities were retrieved from localStorage, update the cities array to it
+        if (storedCities !== null) {
+          cityHistory = storedCities;
+        }
+      
+        // Render todos to the DOM
+        renderButtons();
+    }
+
+    function renderButtons() {
+        $("#BtnDiv").innerHTML = "";
+        for (var i = 0; i < cityHistory.length; i++) {
+            var city = cityHistory[i];
+            var newBtn = $("<button>");
+            newBtn.addClass("btn btn-primary searchResult");
+            newBtn.attr("data-name", city);
+            newBtn.text(city);
+            $("#BtnDiv").prepend(newBtn);
+
+        }
+        
+    }
+
+    $("#searchBtn").on("click", function(event) {
+        event.preventDefault();
+        var searchVal = $("#searchBar").val();
+        if (searchVal === "") {
+            return;
+        }
+        cityHistory.push(searchVal);
+        searchVal = "";
+        localStorage.setItem("searchHistory", JSON.stringify(cityHistory));
+        renderButtons();
+    })
+    StorageCheck();
+    getLocation();
 })

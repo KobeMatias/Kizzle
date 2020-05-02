@@ -22,6 +22,36 @@ body {
     margin-left: 5px;
 }
 
+.searchResult {
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 .forecastDiv {
     margin-top: 1rem;
+}
+
+.cityDiv {
+    margin-bottom: 1rem;
+}
+
+/* Sticky Footer Classes */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+  flex: 1 0 auto;
+}
+
+#sticky-footer {
+  flex-shrink: 0;
 }
