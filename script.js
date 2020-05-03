@@ -45,34 +45,46 @@ $(document).ready(function() {
             windSpeedEl.text("");
             uviEl.text("");
 
+            var weatherData = "http://openweathermap.org/img/wn/" + response.current.weather[0].icon + ".png";
             var tempData = response.current.temp;
             var humidityData = response.current.humidity;
             var windData = response.current.wind_speed;
             var uviData = response.current.uvi;
 
+            var weatherIcon = $("<img>").attr("src", weatherData);
+            $("#weatherDisplay").prepend(weatherIcon);
             tempEl.append("Temperature: " + tempData + " F");
-            humidityEl.append("Humidity: " + humidityData);
-            windSpeedEl.append("Wind Speed: " + windData);
+            humidityEl.append("Humidity: " + humidityData + "%");
+            windSpeedEl.append("Wind Speed: " + windData + "Mph");
             uviEl.append("UV Index: " + uviData);
+            if (uviData < 8) {
+                uviEl.addClass("low");
+            } else {
+                uviEl.addClass("high");
+            }
             $("#forecastBody").html("");
             for (i = 1; i < 6; i++) {
                 var forecastDate = moment().add(i, 'days').format('L');  
                 var forecastCol = $("<div class='col'>");
+                var forecastCard = $("<div class='card forecast'>");
                 var forecastHeader = $("<div class='card-header'>");
                 var forecastDateP = $("<p>").text(forecastDate);
 
                 $("#forecastBody").append(forecastCol);
-                forecastCol.append(forecastHeader);
+                forecastCol.append(forecastCard);
+                forecastCard.append(forecastHeader);
                 forecastHeader.append(forecastDateP);
 
+                var forecastWeatherData = "http://openweathermap.org/img/wn/" + response.daily[i].weather[0].icon + ".png";
                 var forecastTempData = response.daily[i].temp.day;
                 var forecastHumidityData = response.daily[i].humidity;
                 var forecastData = $("<div class='card-body'>");
 
+                var forecastWeatherIcon = $("<img>").attr("src", forecastWeatherData);
                 var forecastTempEl = $("<p>").text("Temp: " + forecastTempData + " F");
                 var forecastHumidityEl = $("<p>").text("Humidity: " + forecastHumidityData + "%");
-                forecastCol.append(forecastData);
-                forecastData.append(forecastTempEl, forecastHumidityEl);
+                forecastCard.append(forecastData);
+                forecastData.append(forecastWeatherIcon, forecastTempEl, forecastHumidityEl);
             }
         });
 

@@ -10,7 +10,10 @@ body {
     margin-top: 1rem;
     background-color: #f3f3f3;
 }
-
+img {
+    height: 100px;
+    width: 100px;
+}
 #searchBar {
     font-size: 18px;
     padding-bottom: 4px;
@@ -28,6 +31,20 @@ body {
     margin-bottom: 0.5rem;
 }
 
+.low {
+    background-color: #00d427;
+}
+
+.high {
+    background-color: #b80000;
+}
+#uvIndex {
+    width: 110px;
+}
+
+.forecast {
+    text-align: center;
+}
 .forecastDiv {
     margin-top: 1rem;
 }
