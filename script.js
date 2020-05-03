@@ -35,16 +35,17 @@ $(document).ready(function() {
         }).then(function(response) {
             console.log(response);
             
-            var tempEl = $("#temp");
-            var humidityEl = $("#humidity");
-            var windSpeedEl = $("#windSpeed");
-            var uviEl = $("#uvIndex");
+            // tempEl.text("");
+            // humidityEl.text("");
+            // windSpeedEl.text("");
+            // uviEl.text("");
+            $("#weatherDisplay").empty();
 
-            tempEl.text("");
-            humidityEl.text("");
-            windSpeedEl.text("");
-            uviEl.text("");
-
+            var tempEl = $("<p id='temp' class='card-text'>");
+            var humidityEl = $("<p id='humidity' class='card-text'>");
+            var windSpeedEl = $("<p id='windSpeed' class='card-text'>");
+            var uviEl = $("<p id='uvIndex' class='card-text'>");
+        
             var weatherData = "http://openweathermap.org/img/wn/" + response.current.weather[0].icon + ".png";
             var tempData = response.current.temp;
             var humidityData = response.current.humidity;
@@ -52,15 +53,23 @@ $(document).ready(function() {
             var uviData = response.current.uvi;
 
             var weatherIcon = $("<img>").attr("src", weatherData);
+            weatherIcon.empty();
             $("#weatherDisplay").prepend(weatherIcon);
-            tempEl.append("Temperature: " + tempData + " F");
-            humidityEl.append("Humidity: " + humidityData + "%");
-            windSpeedEl.append("Wind Speed: " + windData + "Mph");
-            uviEl.append("UV Index: " + uviData);
+            tempEl.text("Temperature: " + tempData + " F");
+            humidityEl.text("Humidity: " + humidityData + "%");
+            windSpeedEl.text("Wind Speed: " + windData + "Mph");
+            uviEl.text("UV Index: " + uviData);
+            
+            $("#weatherDisplay").append(tempEl);
+            $("#weatherDisplay").append(humidityEl);
+            $("#weatherDisplay").append(windSpeedEl);
+            $("#weatherDisplay").append(uviEl);
             if (uviData < 8) {
                 uviEl.addClass("low");
+                uviEl.removeClass("high");
             } else {
                 uviEl.addClass("high");
+                uviEl.removeClass("low");
             }
             $("#forecastBody").html("");
             for (i = 1; i < 6; i++) {
@@ -98,7 +107,7 @@ $(document).ready(function() {
             var cityDiv = $("#cityName");
             var cityData = response.results[6].formatted_address;
             cityDiv.html("");
-            var cityDisplay = $("<p>").text(cityData);
+            var cityDisplay = $("<h3 class='display-4'>").text(cityData);
             var dateDisplay = $("<p>").text(forecastDate);
             cityDiv.append(cityDisplay, dateDisplay);
         });
