@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    var longitude;
+    var latitude;
 
     function updateTime() {
         var date = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -10,40 +12,49 @@ $(document).ready(function() {
         navigator.geolocation.getCurrentPosition(showPosition);
         showPosition();
     }
-
     function showPosition(position) {
-        var longitude = position.coords.longitude;
-        var latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        latitude = position.coords.latitude;
         console.log(longitude);
         console.log(latitude);
+        renderWeather()
+    }
+    function renderWeather() {
 
         var APIKeyWeather = "cb1577afa812f61cbe09d858ec81e6a7"
         var APIKeyGoogle = "AIzaSyAOY009CGgDZyGzU8xEcUZ337wPd_M054g"
         
+        
         var googleURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=" + APIKeyGoogle;
-        var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + APIKeyWeather;
+        var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude +  "&units=imperial&appid=" + APIKeyWeather;
+        
 
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function(response) {
             console.log(response);
+            
             var tempEl = $("#temp");
             var humidityEl = $("#humidity");
             var windSpeedEl = $("#windSpeed");
             var uviEl = $("#uvIndex");
 
-            var tempData = (response.current.temp - 273.15) * 1.80 + 32;
-            var tempDataRounded = tempData.toFixed(2);
+            tempEl.text("");
+            humidityEl.text("");
+            windSpeedEl.text("");
+            uviEl.text("");
+
+            var tempData = response.current.temp;
             var humidityData = response.current.humidity;
             var windData = response.current.wind_speed;
             var uviData = response.current.uvi;
 
-            tempEl.append("Temperature: " + tempDataRounded + " F");
+            tempEl.append("Temperature: " + tempData + " F");
             humidityEl.append("Humidity: " + humidityData);
             windSpeedEl.append("Wind Speed: " + windData);
             uviEl.append("UV Index: " + uviData);
-
+            $("#forecastBody").html("");
             for (i = 1; i < 6; i++) {
                 var forecastDate = moment().add(i, 'days').format('L');  
                 var forecastCol = $("<div class='col'>");
@@ -54,12 +65,11 @@ $(document).ready(function() {
                 forecastCol.append(forecastHeader);
                 forecastHeader.append(forecastDateP);
 
-                var forecastTempData = (response.daily[i].temp.day - 273.15) * 1.80 + 32;
-                var forecastTempDataRounded = forecastTempData.toFixed(2);
+                var forecastTempData = response.daily[i].temp.day;
                 var forecastHumidityData = response.daily[i].humidity;
                 var forecastData = $("<div class='card-body'>");
 
-                var forecastTempEl = $("<p>").text("Temp: " + forecastTempDataRounded + " F");
+                var forecastTempEl = $("<p>").text("Temp: " + forecastTempData + " F");
                 var forecastHumidityEl = $("<p>").text("Humidity: " + forecastHumidityData + "%");
                 forecastCol.append(forecastData);
                 forecastData.append(forecastTempEl, forecastHumidityEl);
@@ -72,14 +82,30 @@ $(document).ready(function() {
         }).then(function(response) {
             console.log(response);
             var forecastDate = moment().format('L');
+            
             var cityDiv = $("#cityName");
             var cityData = response.results[6].formatted_address;
+            cityDiv.html("");
             var cityDisplay = $("<p>").text(cityData);
             var dateDisplay = $("<p>").text(forecastDate);
             cityDiv.append(cityDisplay, dateDisplay);
         });
     }
-
+    var clickedCity;
+    function citybutton() {
+        var APIKeyOpenCage = "0e893a43b61740029dae9b3b5397296d"
+        var opencageURL = "https://api.opencagedata.com/geocode/v1/json?q=" + clickedCity + "&key=" + APIKeyOpenCage;
+        
+        $.ajax({
+            url: opencageURL,
+            method: "GET"
+        }).then(function(response) {
+            console.log(response);
+            latitude = response.results[0].geometry.lat
+            longitude = response.results[0].geometry.lng
+            renderWeather();
+        })
+    }
 
     var cityHistory = [];
 
@@ -102,13 +128,19 @@ $(document).ready(function() {
         for (var i = 0; i < cityHistory.length; i++) {
             var city = cityHistory[i];
             var newBtn = $("<button>");
-            newBtn.addClass("btn btn-primary searchResult");
+            newBtn.addClass("btn btn-primary searchResult cityadded");
             newBtn.attr("data-name", city);
-            newBtn.attr("id", city);
+            newBtn.attr("id", "cityBtn");
             newBtn.text(city);
             $("#BtnDiv").prepend(newBtn);
         }        
     }
+    $("#BtnDiv").on("click","button", function(event) {
+        event.preventDefault();
+        clickedCity = $(this).attr("data-name");
+        console.log(clickedCity);
+        citybutton();
+    })
 
     $("#searchBtn").on("click", function(event) {
         event.preventDefault();
