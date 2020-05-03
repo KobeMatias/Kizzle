@@ -18,6 +18,28 @@ hr {
     border: 1px solid black;
 }
 
+.rotate-center {
+	animation: rotate-center 10s linear infinite both;
+}
+
+@keyframes rotate-center {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+  }
+  @keyframes rotate-center {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+  }
+  
+
 .card {
     text-align: center;
 }
