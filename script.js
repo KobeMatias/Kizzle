@@ -80,11 +80,12 @@ $(document).ready(function() {
         });
     }
 
+
     var cityHistory = [];
 
     function StorageCheck() {
         // Get stored cities from localStorage
-        // Parsing the JSON string to an object
+        // Parsing the JSON string to an array
         var storedCities = JSON.parse(localStorage.getItem("searchHistory"));
       
         // If cities were retrieved from localStorage, update the cities array to it
@@ -92,22 +93,21 @@ $(document).ready(function() {
           cityHistory = storedCities;
         }
       
-        // Render todos to the DOM
+        // Render cities to the DOM
         renderButtons();
     }
 
     function renderButtons() {
-        $("#BtnDiv").innerHTML = "";
+        $("#BtnDiv").html("");
         for (var i = 0; i < cityHistory.length; i++) {
             var city = cityHistory[i];
             var newBtn = $("<button>");
             newBtn.addClass("btn btn-primary searchResult");
             newBtn.attr("data-name", city);
+            newBtn.attr("id", city);
             newBtn.text(city);
             $("#BtnDiv").prepend(newBtn);
-
-        }
-        
+        }        
     }
 
     $("#searchBtn").on("click", function(event) {
@@ -117,9 +117,17 @@ $(document).ready(function() {
             return;
         }
         cityHistory.push(searchVal);
-        searchVal = "";
         localStorage.setItem("searchHistory", JSON.stringify(cityHistory));
+        $("#searchBar").val("");
         renderButtons();
+    })
+
+    $("#clearBtn").on("click", function(event) {
+        event.preventDefault();
+        $("#searchBar").val("");
+        localStorage.clear();
+        $("#BtnDiv").html("");
+        cityHistory = [];
     })
     StorageCheck();
     getLocation();
