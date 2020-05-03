@@ -149,7 +149,7 @@ $(document).ready(function() {
         for (var i = 0; i < cityHistory.length; i++) {
             var city = cityHistory[i];
             var newBtn = $("<button>");
-            newBtn.addClass("btn btn-primary searchResult cityadded");
+            newBtn.addClass("btn btn-primary searchResult display-4");
             newBtn.attr("data-name", city);
             newBtn.attr("id", "cityBtn");
             newBtn.text(city);
@@ -165,7 +165,7 @@ $(document).ready(function() {
 
     $("#searchBtn").on("click", function(event) {
         event.preventDefault();
-        var searchVal = $("#searchBar").val();
+        var searchVal = ($("#searchBar").val().toUpperCase());
         if (searchVal === "") {
             return;
         }

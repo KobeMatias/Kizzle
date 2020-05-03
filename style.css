@@ -11,8 +11,10 @@ body {
     background-color: #f3f3f3;
 }
 img {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
+    background-color: #d4f9ff;
+    border-radius: 1rem;
 }
 
 .display-4 {
