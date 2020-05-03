@@ -4,12 +4,19 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
 .jumbotron {
     margin-top: 1rem;
     background-color: #f3f3f3;
+    text-align: center;
 }
+
+.card {
+    text-align: center;
+}
+
 img {
     height: 70px;
     width: 70px;
@@ -17,8 +24,13 @@ img {
     border-radius: 1rem;
 }
 
+.display-3 {
+    font-weight: 500;
+}
+
 .display-4 {
     font-size: 22px;
+    font-weight: 500;
 }
 
 #searchBar {
@@ -39,14 +51,18 @@ img {
 }
 
 .low {
-    background-color: #00d427;
+    color: #00e42a;
 }
 
 .high {
-    background-color: #b80000;
+    color: #b80000;
 }
+ .card-body { 
+    font-size: 18px;
+}
+
 #uvIndex {
-    width: 110px;
+    font-weight: 500;
 }
 
 .forecast {

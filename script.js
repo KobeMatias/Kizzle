@@ -34,11 +34,7 @@ $(document).ready(function() {
             method: "GET"
         }).then(function(response) {
             console.log(response);
-            
-            // tempEl.text("");
-            // humidityEl.text("");
-            // windSpeedEl.text("");
-            // uviEl.text("");
+
             $("#weatherDisplay").empty();
 
             var tempEl = $("<p id='temp' class='card-text'>");
@@ -90,7 +86,7 @@ $(document).ready(function() {
                 var forecastData = $("<div class='card-body'>");
 
                 var forecastWeatherIcon = $("<img>").attr("src", forecastWeatherData);
-                var forecastTempEl = $("<p>").text("Temp: " + forecastTempData + " F");
+                var forecastTempEl = $("<p>").text("Temperature: " + forecastTempData + " F");
                 var forecastHumidityEl = $("<p>").text("Humidity: " + forecastHumidityData + "%");
                 forecastCard.append(forecastData);
                 forecastData.append(forecastWeatherIcon, forecastTempEl, forecastHumidityEl);
@@ -108,7 +104,7 @@ $(document).ready(function() {
             var cityData = response.results[6].formatted_address;
             cityDiv.html("");
             var cityDisplay = $("<h3 class='display-4'>").text(cityData);
-            var dateDisplay = $("<p>").text(forecastDate);
+            var dateDisplay = $("<h3 class='display-4'>").text(forecastDate);
             cityDiv.append(cityDisplay, dateDisplay);
         });
     }
