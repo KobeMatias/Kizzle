@@ -124,7 +124,7 @@ $(document).ready(function() {
         })
     }
 
-    var cityHistory = [];
+    var cityHistory = ["NAIROBI", "DENVER", "TOKYO", "MOSCOW", "LISBON", "RIO"];
 
     function StorageCheck() {
         // Get stored cities from localStorage
@@ -175,8 +175,9 @@ $(document).ready(function() {
         event.preventDefault();
         $("#searchBar").val("");
         localStorage.clear();
+        cityHistory = ["NAIROBI", "DENVER", "TOKYO", "MOSCOW", "LISBON", "RIO"];
         $("#BtnDiv").html("");
-        cityHistory = [];
+        renderButtons();
     })
     StorageCheck();
     getLocation();
