@@ -51,7 +51,7 @@ $(document).ready(function() {
             var weatherIcon = $("<img>").attr("src", weatherData);
             weatherIcon.empty();
             $("#weatherDisplay").prepend(weatherIcon);
-            tempEl.text("Temperature: " + tempData + " F");
+            tempEl.text("Temperature: " + tempData + String.fromCharCode(176) + "F");
             humidityEl.text("Humidity: " + humidityData + "%");
             windSpeedEl.text("Wind Speed: " + windData + "Mph");
             uviEl.text("UV Index: " + uviData);
@@ -86,7 +86,7 @@ $(document).ready(function() {
                 var forecastData = $("<div class='card-body'>");
 
                 var forecastWeatherIcon = $("<img>").attr("src", forecastWeatherData);
-                var forecastTempEl = $("<p>").text("Temperature: " + forecastTempData + " F");
+                var forecastTempEl = $("<p>").text("Temperature: " + forecastTempData + String.fromCharCode(176) + "F");
                 var forecastHumidityEl = $("<p>").text("Humidity: " + forecastHumidityData + "%");
                 forecastCard.append(forecastData);
                 forecastData.append(forecastWeatherIcon, forecastTempEl, forecastHumidityEl);

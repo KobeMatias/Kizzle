@@ -47,7 +47,7 @@ hr {
 img {
     height: 70px;
     width: 70px;
-    background-color: #d4f9ff;
+    background-color: #0acffe;
     border-radius: 1rem;
 }
 
@@ -121,4 +121,8 @@ body {
 
 #sticky-footer {
   flex-shrink: 0;
+}
+
+.text-center {
+    color: #fff;
 }
