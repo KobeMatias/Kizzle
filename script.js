@@ -110,7 +110,7 @@ $(document).ready(function() {
     }
     var clickedCity;
     function citybutton() {
-        var APIKeyOpenCage = "0e893a43b61740029dae9b3b5397296d"
+        var APIKeyOpenCage = "9f5496e205ee49b38796cb9abb56c9c7"
         var opencageURL = "https://api.opencagedata.com/geocode/v1/json?q=" + clickedCity + "&key=" + APIKeyOpenCage;
         
         $.ajax({
